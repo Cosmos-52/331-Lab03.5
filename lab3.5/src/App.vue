@@ -1,5 +1,9 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
+import { useMessangeStore } from './stores/message'
+import { storeToRefs } from 'pinia'
+const store = useMessangeStore()
+const { message } = storeToRefs(store)
 </script>
 
 <template>
@@ -11,6 +15,9 @@ import { RouterLink, RouterView } from 'vue-router'
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>
       </nav>
+      <div id="flashMessage" v-if="message">
+        <h4>{{ message }}</h4>
+      </div>
     </div>
   </header>
 
@@ -67,5 +74,16 @@ nav a:first-of-type {
     padding: 1rem 0;
     margin-top: 1rem;
   }
+}
+@keyframes yellowfade {
+  from {
+    background: yellow;
+  }
+  to {
+    background: transparent;
+  }
+}
+#flashMessage {
+  animation: yellowfade 5s ease-in-out;
 }
 </style>
